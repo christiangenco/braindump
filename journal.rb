@@ -47,7 +47,10 @@ def main
           session_start = Time.now
         end
         line = ""
-      when "\u007F", "\b", "\u001b" # Backspace, Delete, Escape - ignore
+      when "\u007F", "\b" # Backspace, Delete
+        line += "<del>"
+        print "<del>"
+      when "\u001b" # Escape - ignore
         next
       else
         if ch.match?(/[[:print:]]/) || ch == "\t"
