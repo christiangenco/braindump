@@ -12,19 +12,20 @@ def write_line(text, session_start)
 
   File.open(JOURNAL_PATH, "a") do |f|
     if elapsed >= TIMESTAMP_INTERVAL
-      timestamp = now.strftime("%Y-%m-%dT%H:%M:%S")
-      f.write("\n## #{timestamp}\n\n")
-      puts "\n\e[2m#{timestamp}\e[0m"
+      time_only = now.strftime("%H:%M:%S")
+      f.write("\n#{time_only}\n\n")
+      puts "\n\e[2m#{time_only}\e[0m"
     end
     f.write("#{text}\n")
   end
+  system("paplay /usr/share/sounds/freedesktop/stereo/message.oga &")
 end
 
 def main
   session_start = Time.now
   timestamp = session_start.strftime("%Y-%m-%dT%H:%M:%S")
 
-  File.open(JOURNAL_PATH, "a") { |f| f.write("\n## #{timestamp}\n\n") }
+  File.open(JOURNAL_PATH, "a") { |f| f.write("\n# #{timestamp}\n\n") }
 
   puts "\e[2m#{timestamp}\e[0m"
   puts "\e[2mWrite-only journal. Ctrl+C or Ctrl+D to exit.\e[0m\n"
